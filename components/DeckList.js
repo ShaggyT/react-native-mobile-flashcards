@@ -3,15 +3,25 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+  TouchableOpacity,
+} from 'react-native'
+import { Header } from 'react-native-elements'
+import { blackStatusBar } from '../utils/colors'
 
 
 class DeckList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Deck List</Text>
+      <View >
+        <Header
+           centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
+           backgroundColor={ blackStatusBar }
+         />
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Deck')}>
+          <Text style={styles.container}>Deck List</Text>
+        </TouchableOpacity>
       </View>
     )
   }
