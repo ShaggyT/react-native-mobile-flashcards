@@ -1,0 +1,7 @@
+export const lightGreen = '#00C39E'
+export const whiteBackground = '#fff'
+export const blackStatusBar = '#080808'
+export const whiteHeader = '#F9F9F9'
+export const lightGray = '#F5F5F5'
+export const red = '#b71845'
+export const gray = '#757575'
