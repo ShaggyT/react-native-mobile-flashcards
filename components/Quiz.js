@@ -7,11 +7,15 @@ import {
 
 
 class Quiz extends Component {
-
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Start Quiz'
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text>Add Deck</Text>
+        <Text>Start Quiz</Text>
       </View>
     )
   }

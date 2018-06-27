@@ -7,7 +7,11 @@ import {
 
 
 class AddCard extends Component {
-
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Add Card'
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
