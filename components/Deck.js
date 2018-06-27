@@ -7,7 +7,12 @@ import {
 
 
 class Deck extends Component {
-
+  //  adding static property to dynamically set navigation options
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Deck'
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
