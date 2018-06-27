@@ -9,9 +9,15 @@ import {
 import { blackStatusBar, whiteHeader, lightGreen } from './utils/colors'
 import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { createBottomTabNavigator } from 'react-navigation'
+import {
+  createBottomTabNavigator,
+  createStackNavigator
+} from 'react-navigation'
 import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
+import Deck from './components/Deck'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 
 //  custome statusbar
 function AppStatusBar({backgroundColor, ...props}) {
@@ -58,6 +64,46 @@ const Tabs = createBottomTabNavigator({
   }
 })
 
+const MainNavigator = createStackNavigator(
+  {
+  Home: {
+    screen: Tabs,
+    headerMode: 'none',
+    header: null,
+    navigationOptions: {
+        header: null,
+    }
+  },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      headerTintColor: whiteHeader,
+      headerStyle: {
+        backgroundColor: blackStatusBar,
+      }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: whiteHeader,
+      headerStyle: {
+        backgroundColor: blackStatusBar,
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: whiteHeader,
+      headerStyle: {
+        backgroundColor: blackStatusBar,
+      }
+    }
+  }
+},
+)
+
 export default class App extends React.Component {
   render() {
     return (
@@ -66,7 +112,7 @@ export default class App extends React.Component {
           backgroundColor={ blackStatusBar }
           barStyle="light-content"
         />
-        <Tabs />
+        <MainNavigator />
       </View>
     )
   }
