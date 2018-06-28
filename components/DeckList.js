@@ -11,6 +11,7 @@ import { blackStatusBar, lightGreen, gray, black } from '../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
+import { cardsCount } from '../utils/helpers'
 
 function Deck({ title, cardsCounts }) {
   return(
@@ -23,7 +24,7 @@ function Deck({ title, cardsCounts }) {
       <View>
         <Card style={{fontSize: 20 }} title={title}>
           <View style={styles.deckItem}>
-            <Text style={{color: gray}}>{cardsCounts} cards</Text>
+            <Text style={{color: gray}}>{cardsCount(cardsCounts)}</Text>
             <MaterialCommunityIcons
               style={{justifyContent: 'center', alignItems: 'center'}}
               name='cards'
@@ -49,8 +50,6 @@ class DeckList extends Component {
     return <Deck {...item} />
   }
 
-  _keyExtractor = (item, index) => item.id
-
   render() {
     return (
       <View>
@@ -62,12 +61,20 @@ class DeckList extends Component {
           onPress={() => this.props.navigation.navigate('Deck')}>
           <Text style={styles.container}>Deck List</Text>
         </TouchableOpacity>
-        <FlatList
-          data={[{title: 'Jon Snow', cardsCounts: 4 },{title: 'Arya Stark', cardsCounts: 2 }, {title:'Tyrian Lanicter', cardsCounts: 1 }, {title: 'Ned Stark', cardsCounts: 5 }]}
-          renderItem={this.renderItem}
-          keyExtractor={this._keyExtractor}
-        >
-        </FlatList>
+        {this.props.decks && Object.keys(this.props.decks).length ?
+          <FlatList
+            data={this.props.decks}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => item.title}
+          >
+          </FlatList>
+          :
+          <View>
+            <Text style={styles.text}>
+              No decks found
+            </Text>
+          </View>
+          }
       </View>
     );
   }
@@ -84,13 +91,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-  }
+  },
+  text: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    fontSize: 15,
+  },
 })
 
 
-function mapStateToProps (decks) {
+function mapStateToProps(decks) {
   return {
-    decks
+    decks: Object.keys(decks).map(deck => ({
+      title: decks[deck].title,
+      cardsCounts: decks[deck].questions.length
+    }))
   }
 }
 
