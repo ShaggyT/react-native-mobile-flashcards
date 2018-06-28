@@ -7,11 +7,13 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Platform,
+  Alert
 } from 'react-native'
 import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { saveDeckTitle } from '../utils/api'
 
 function SubmitBtn ({onPress}) {
   return(
@@ -30,14 +32,19 @@ class AddDeck extends Component {
 
   submit = () => {
     const  { title }  = this.state
-    // update redux: saving specific deck into redux store
 
+    // update redux: saving specific deck into redux store
     this.props.addDeck({
       [title]: {
         title: title,
         questions: []
       }
     })
+
+    // if (title.length === 0 ) {
+    //   Alert.alert('The title field can be empty!')
+    //   return
+    // }
 
     //  clearing the state
     this.setState({
@@ -48,7 +55,7 @@ class AddDeck extends Component {
     this.toHome()
 
     // save to DB
-
+    saveDeckTitle (title)
   }
 
   toHome = () => {
