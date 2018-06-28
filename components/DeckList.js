@@ -43,7 +43,8 @@ class DeckList extends Component {
   componentDidMount() {
     this.props.receiveDecks()
   }
-  
+
+
   renderItem = ({ item }) => {
     return <Deck {...item} />
   }

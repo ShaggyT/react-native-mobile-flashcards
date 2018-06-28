@@ -33,5 +33,4 @@ function decks (state = initialDeckState, action) {
   }
 }
 
-
 export default decks
