@@ -9,11 +9,14 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  Alert
 } from 'react-native';
 import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
 import { addCard  } from '../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { addCardToDeck } from '../utils/api'
+
 
 function SubmitBtn ({onPress}) {
   return(
@@ -45,7 +48,7 @@ class AddCard extends Component {
         }
 
         // if (question.length === 0 || answer.length === 0) {
-        //   alert('Question and Answer field can\'t be blank')
+        //   Alert.alert('Question and Answer field can\'t be blank')
         //   return
         // }
 
@@ -58,11 +61,11 @@ class AddCard extends Component {
           answer: ''
         })
 
-        // Navigate to home
+        // Navigate to Deck
         this.props.navigation.goBack()
 
         // save to DB
-
+        addCardToDeck (title,card)
     }
 
   render() {
