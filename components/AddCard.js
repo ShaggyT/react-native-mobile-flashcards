@@ -11,9 +11,9 @@ import {
   Platform,
 } from 'react-native';
 import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
-import { submitEntry } from '../utils/api'
-import { addDeck } from '../actions'
+import { addCard  } from '../actions'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 function SubmitBtn ({onPress}) {
   return(
@@ -32,16 +32,25 @@ class AddCard extends Component {
     }
   }
   state = {
-
     question: '',
     answer: ''
   }
 
   submit = () => {
         const  { question , answer }  = this.state
+        const { title } = this.props.navigation.state.params
+        const card = {
+          question: question,
+          answer: answer
+        }
 
-        // update redux
-        //  saving specific deck into redux store
+        // if (question.length === 0 || answer.length === 0) {
+        //   alert('Question and Answer field can\'t be blank')
+        //   return
+        // }
+
+        // update redux: saving specific card into redux store
+        this.props.addCard(title, card)
 
         // clear the state
         this.setState({
@@ -50,10 +59,12 @@ class AddCard extends Component {
         })
 
         // Navigate to home
+        this.props.navigation.goBack()
 
         // save to DB
 
     }
+
   render() {
     const { question, answer } = this.state
     return (
@@ -160,4 +171,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(AddCard)
+function mapDispatchToProps (dispatch) {
+  return {
+    addCard: (title, card) => dispatch(addCard(title, card)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(AddCard)

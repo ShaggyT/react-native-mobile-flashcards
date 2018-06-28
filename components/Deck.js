@@ -31,7 +31,7 @@ class Deck extends Component {
               <Text style={styles.subHeader}>
                 {cardsCount(cardsCounts)}
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard')}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard', { title: deck.title })}>
                 Add Card
               </TextButton>
               <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz')}>

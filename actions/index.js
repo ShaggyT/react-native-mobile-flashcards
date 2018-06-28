@@ -2,6 +2,7 @@ import * as API from '../utils/api'
 import {
   RECEIVE_DECKS,
   ADD_DECK,
+  ADD_CARD
 } from './types'
 
 export function receiveDecks (decks) {
