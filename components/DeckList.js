@@ -4,10 +4,12 @@ import {
   Text,
   View,
   TouchableOpacity,
+  FlatList,
 } from 'react-native'
 import { Header, Card } from 'react-native-elements'
 import { blackStatusBar, lightGreen, gray, black } from '../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 
 function Deck({ title, cardsCounts }) {
   return(
@@ -37,6 +39,12 @@ function Deck({ title, cardsCounts }) {
 
 
 class DeckList extends Component {
+  renderItem = ({ item , index }) => {
+    return <Deck {...item} />
+  }
+
+  _keyExtractor = (item, index) => item.id
+
   render() {
     return (
       <View>
@@ -48,10 +56,12 @@ class DeckList extends Component {
           onPress={() => this.props.navigation.navigate('Deck')}>
           <Text style={styles.container}>Deck List</Text>
         </TouchableOpacity>
-        <Deck title='Jon Snow' cardsCounts={4}/>
-        <Deck title='Arya Stark' cardsCounts={2}/>
-        <Deck title='Tyrian Lanicter' cardsCounts={1}/>
-        <Deck title='Ned Stark' cardsCounts={5}/>
+        <FlatList
+          data={[{title: 'Jon Snow', cardsCounts: 4 },{title: 'Arya Stark', cardsCounts: 2 }, {title:'Tyrian Lanicter', cardsCounts: 1 }, {title: 'Ned Stark', cardsCounts: 5 }]}
+          renderItem={this.renderItem}
+          keyExtractor={this._keyExtractor}
+        >
+        </FlatList>
       </View>
     );
   }
