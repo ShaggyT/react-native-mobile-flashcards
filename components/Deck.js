@@ -6,31 +6,49 @@ import {
 } from 'react-native';
 import { gray  } from '../utils/colors'
 import TextButton from './TextButton'
+import { connect } from 'react-redux'
+import { cardsCount } from '../utils/helpers'
 
 class Deck extends Component {
   //  adding static property to dynamically set navigation options
   static navigationOptions = ({ navigation }) => {
+    const { title } = navigation.state.params
     return {
-      title: 'Deck'
+      title: title
     }
   }
   render() {
+    const { deck } = this.props
+    const cardsCounts = deck.questions.length
     return (
       <View style={styles.container}>
         <View>
           <Text style={styles.header}>
-            Hello
+            {deck.title}
           </Text>
-          <Text style={styles.subHeader}>
-            3 Cards
-          </Text>
+          {deck.questions.length > 0 ?
+            <View>
+              <Text style={styles.subHeader}>
+                {cardsCount(cardsCounts)}
+              </Text>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard')}>
+                Add Card
+              </TextButton>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz')}>
+                Start Quiz
+              </TextButton>
+            </View>
+            :
+            <View>
+              <Text style={styles.subHeader}>
+                {deck.title} deck is Empty!
+              </Text>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard')}>
+                Add Card
+              </TextButton>
+            </View>
+          }
         </View>
-        <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard')}>
-          Add Card
-        </TextButton>
-        <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz')}>
-          Start Quiz
-        </TextButton>
       </View>
     )
   }
@@ -56,4 +74,14 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Deck
+
+function mapStateToProps (state, { navigation }) {
+ // comes form DeckList - when we navigate to Deck, passing title
+  const { title } = navigation.state.params
+  return {
+    deck: state[title]
+  }
+}
+
+
+export default connect(mapStateToProps)(Deck)

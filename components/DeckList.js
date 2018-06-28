@@ -13,41 +13,43 @@ import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
 
-function Deck({ title, cardsCounts }) {
-  return(
-    <TouchableOpacity
-      key={title}
-      onPress={() => {
-        this.props.navigation.navigate('Deck', { title: title })
-      }}
-    >
-      <View>
-        <Card style={{fontSize: 20 }} title={title}>
-          <View style={styles.deckItem}>
-            <Text style={{color: gray}}>{cardsCount(cardsCounts)}</Text>
-            <MaterialCommunityIcons
-              style={{justifyContent: 'center', alignItems: 'center'}}
-              name='cards'
-              size={20}
-              style={{marginRight: 10, marginBottom:-20}}
-              color={lightGreen }
-            />
-          </View>
-        </Card>
-      </View>
-    </TouchableOpacity>
-  )
-}
-
-
 class DeckList extends Component {
   componentDidMount() {
     this.props.receiveDecks()
   }
 
-
   renderItem = ({ item }) => {
-    return <Deck {...item} />
+    return (
+      <TouchableOpacity
+        key={item.title}
+        onPress={() => {
+          this.props.navigation.navigate('Deck', { title: item.title })
+        }}
+      >
+        <View>
+          <Card style={{fontSize: 20 }} title={item.title}>
+            {item.cardsCounts > 0 ?
+              <View style={styles.deckItem}>
+                <Text style={{color: gray}}>{cardsCount(item.cardsCounts)}</Text>
+                <MaterialCommunityIcons
+                  style={{justifyContent: 'center', alignItems: 'center'}}
+                  name='cards'
+                  size={20}
+                  style={{marginRight: 10, marginBottom:-20}}
+                  color={lightGreen }
+                />
+              </View>
+              :
+              <View>
+                <Text style={styles.subHeader}>
+                  The deck is Empty!
+                </Text>
+              </View>
+            }
+          </Card>
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   render() {
@@ -57,10 +59,6 @@ class DeckList extends Component {
            centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
            backgroundColor={ blackStatusBar }
          />
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Deck')}>
-          <Text style={styles.container}>Deck List</Text>
-        </TouchableOpacity>
         {this.props.decks && Object.keys(this.props.decks).length ?
           <FlatList
             data={this.props.decks}
@@ -97,6 +95,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     fontSize: 15,
+  },
+  subHeader: {
+    textAlign: 'center',
+    marginTop: 5,
+    color: gray,
   },
 })
 
