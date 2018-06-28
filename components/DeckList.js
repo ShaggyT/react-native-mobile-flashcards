@@ -39,7 +39,7 @@ function Deck({ title, cardsCounts }) {
 
 
 class DeckList extends Component {
-  renderItem = ({ item , index }) => {
+  renderItem = ({ item }) => {
     return <Deck {...item} />
   }
 
