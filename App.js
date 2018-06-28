@@ -18,6 +18,9 @@ import DeckList from './components/DeckList'
 import Deck from './components/Deck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 //  custome statusbar
 function AppStatusBar({backgroundColor, ...props}) {
@@ -106,14 +109,17 @@ const MainNavigator = createStackNavigator(
 
 export default class App extends React.Component {
   render() {
+    const store = createStore(reducer)
     return (
-      <View style={{flex:1}}>
-        <AppStatusBar
-          backgroundColor={ blackStatusBar }
-          barStyle="light-content"
-        />
-        <MainNavigator />
-      </View>
+      <Provider store={store}>
+        <View style={{flex:1}}>
+          <AppStatusBar
+            backgroundColor={ blackStatusBar }
+            barStyle="light-content"
+          />
+          <MainNavigator />
+        </View>
+      </Provider>
     )
   }
 }
