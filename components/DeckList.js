@@ -9,7 +9,8 @@ import {
 import { Header, Card } from 'react-native-elements'
 import { blackStatusBar, lightGreen, gray, black } from '../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-
+import { receiveDecks } from '../actions'
+import { connect } from 'react-redux'
 
 function Deck({ title, cardsCounts }) {
   return(
@@ -39,6 +40,10 @@ function Deck({ title, cardsCounts }) {
 
 
 class DeckList extends Component {
+  componentDidMount() {
+    this.props.receiveDecks()
+  }
+  
   renderItem = ({ item }) => {
     return <Deck {...item} />
   }
@@ -81,4 +86,17 @@ const styles = StyleSheet.create({
   }
 })
 
-export default DeckList
+
+function mapStateToProps (decks) {
+  return {
+    decks
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    receiveDecks: (decks) => dispatch(receiveDecks(decks)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
