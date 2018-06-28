@@ -41,9 +41,7 @@ class DeckList extends Component {
               </View>
               :
               <View>
-                <Text style={styles.subHeader}>
-                  The deck is Empty!
-                </Text>
+                <Text style={[styles.subHeader,{color: gray}]}>The deck is Empty!</Text>
               </View>
             }
           </Card>

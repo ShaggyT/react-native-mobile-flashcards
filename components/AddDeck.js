@@ -11,7 +11,7 @@ import {
 import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
-
+import { NavigationActions } from 'react-navigation'
 
 function SubmitBtn ({onPress}) {
   return(
@@ -28,14 +28,8 @@ class AddDeck extends Component {
     title: '',
   }
 
-  handleTextChange = (title) => {
-      this.setState(() => ({
-        title
-      }))
-  }
   submit = () => {
     const  { title }  = this.state
-
     // update redux: saving specific deck into redux store
 
     this.props.addDeck({
@@ -51,11 +45,16 @@ class AddDeck extends Component {
     })
 
     // Navigate to home
-
+    this.toHome()
 
     // save to DB
 
-}
+  }
+
+  toHome = () => {
+  // go from where we are back to where we previously were
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}))
+  }
 
   render() {
     const { title } = this.state
@@ -67,7 +66,7 @@ class AddDeck extends Component {
         <TextInput
           value={title}
           style={styles.title}
-          onTextChange={this.handleTextChange}
+          onChangeText={(title) => this.setState({title})}
           placeholder="Deck Title"
         />
         <SubmitBtn
