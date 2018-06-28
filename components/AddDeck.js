@@ -9,6 +9,8 @@ import {
   Platform,
 } from 'react-native'
 import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
+import { addDeck } from '../actions'
+import { connect } from 'react-redux'
 
 
 function SubmitBtn ({onPress}) {
@@ -32,21 +34,29 @@ class AddDeck extends Component {
       }))
   }
   submit = () => {
-        const  { title }  = this.state
+    const  { title }  = this.state
 
-        // update redux: saving specific deck into redux store
+    // update redux: saving specific deck into redux store
 
-        //  clearing the state
-        this.setState({
-          title: ''
-        })
+    this.props.addDeck({
+      [title]: {
+        title: title,
+        questions: []
+      }
+    })
 
-        // Navigate to home
+    //  clearing the state
+    this.setState({
+      title: ''
+    })
+
+    // Navigate to home
 
 
-        // save to DB
+    // save to DB
 
-    }
+}
+
   render() {
     const { title } = this.state
     return (
@@ -143,4 +153,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AddDeck
+function mapDispatchToProps (dispatch) {
+  return {
+    addDeck: (deck) => dispatch(addDeck(deck)),
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(AddDeck)
