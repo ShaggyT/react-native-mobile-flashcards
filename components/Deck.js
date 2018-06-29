@@ -43,7 +43,7 @@ class Deck extends Component {
               <Text style={styles.subHeader}>
                 {deck.title} deck is Empty!
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard')}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard', { title: deck.title })}>
                 Add Card
               </TextButton>
             </View>

@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
   },
 })
 
+
 function mapDispatchToProps (dispatch) {
   return {
     addCard: (title, card) => dispatch(addCard(title, card)),
