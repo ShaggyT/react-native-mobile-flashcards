@@ -34,7 +34,7 @@ class Deck extends Component {
               <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard', { title: deck.title })}>
                 Add Card
               </TextButton>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz')}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz', { title: deck.title })}>
                 Start Quiz
               </TextButton>
             </View>
