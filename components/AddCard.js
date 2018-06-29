@@ -39,6 +39,7 @@ class AddCard extends Component {
     answer: ''
   }
 
+
   submit = () => {
         const  { question , answer }  = this.state
         const { title } = this.props.navigation.state.params
@@ -78,7 +79,7 @@ class AddCard extends Component {
           <TextInput
             value={question}
             style={styles.input}
-            onTextChange={(question) => this.setState({question})}
+            onChangeText={(question) => this.setState({question})}
             placeholder="Question..."
           />
           <Text style={styles.text}>
@@ -87,7 +88,7 @@ class AddCard extends Component {
           <TextInput
             value={answer}
             style={styles.input}
-            onTextChange={(answer) => this.setState({answer})}
+            onChangeText={(answer) => this.setState({answer})}
             placeholder="Answer..."
           />
           <SubmitBtn
