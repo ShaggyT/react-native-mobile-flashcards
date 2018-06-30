@@ -21,7 +21,6 @@ import Quiz from './components/Quiz'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
-import { setInitialDecks } from './utils/_decks'
 
 //  custome statusbar
 function AppStatusBar({backgroundColor, ...props}) {
@@ -109,9 +108,6 @@ const MainNavigator = createStackNavigator(
 )
 
 export default class App extends React.Component {
-  compinentDidMount() {
-    setInitialDecks()
-  }
   render() {
     const store = createStore(reducer)
     return (

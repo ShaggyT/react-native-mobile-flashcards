@@ -12,8 +12,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
+import { AppLoading } from 'expo'
 
 class DeckList extends Component {
+  // state = {
+  //   ready: false,
+  // }
   componentDidMount() {
     this.props.receiveDecks()
   }
@@ -51,6 +55,11 @@ class DeckList extends Component {
   }
 
   render() {
+    // const { ready } = this.state
+    //
+    // if(ready === false) {
+    //   return <AppLoading />
+    // }
     return (
       <View>
         <Header

@@ -3,13 +3,18 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
-import { whiteBackground,gray } from '../utils/colors'
+import { whiteBackground } from '../utils/colors'
 import { quizResult } from '../utils/helpers'
+import  ResetButton from './ResetButton'
+import FlipButton from './FlipButton'
+import * as Progress from 'react-native-progress'
+import { lightGreen, red, gray } from '../utils/colors'
+
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -21,7 +26,7 @@ class Quiz extends Component {
 
   state = {
     cardView: 'question',
-    cardNumber: 0,
+    questionNumber: 0,
     score: 0,
   }
 
@@ -31,7 +36,7 @@ class Quiz extends Component {
     this.setState((state) => {
       return {
         ...state,
-        cardView: 'question' ? 'answer' : 'question'
+        cardView: 'question' ? 'answer' : 'question',
       }
     })
   }
@@ -40,39 +45,57 @@ class Quiz extends Component {
     this.setState((state) => {
       return {
         ...state,
-        cardNumber: state.cardNumber + 1,
+        questionNumber: state.questionNumber + 1,
         score: state.score + currentScore,
       }
     })
   }
 
+  resetQuiz = () => {
+    this.setState({
+      cardView: 'question',
+      questionNumber: 0,
+      score: 0,
+    })
+  }
+
+  returnToDeck = () => {
+    this.props.navigation.goBack();
+  }
+
   render() {
     const { deck } = this.props
-    const { cardView, cardNumber, score } = this.state
+    const { cardView, questionNumber, score, bounceValue  } = this.state
     const cardCount = deck.questions.length
 
     return (
       <View style={{flex:1}}>
-      { ( cardNumber === cardCount) ?
+
+      { ( questionNumber === cardCount) ?
         (
           <View style={styles.container}>
-            <Text>{quizResult(score, cardNumber)}</Text>
+            <Text style={{marginBottom: 20}}>{quizResult(score, questionNumber)}</Text>
+            <ResetButton style={{padding: 5 ,color: red}} onPress={this.resetQuiz}>
+                Reset Quiz
+            </ResetButton>
+            <ResetButton style={{padding: 5, color: gray}} onPress={this.returnToDeck}>
+                Go Back to Deck
+            </ResetButton>
           </View>
         )
       : (
         <View style={styles.container}>
+          <View>
+            <Text style={styles.progress}>{`${(questionNumber) + 1 }/${cardCount}`}</Text>
+            <Progress.Bar progress={((questionNumber) + 1)/ cardCount} width={200} color={lightGreen} />
+          </View>
           { ( cardView === 'question') ?
               <View style={styles.container}>
-                <Text style={{marginBottom: 10, fontSize: 20}}>{deck.questions[cardNumber].question}</Text>
-                <TouchableOpacity
-                  onPress={this.flipCard}
-                  style={styles.viewButton}
-                >
-                  <Text style={{color: gray,
-                  fontSize: 18}}>
+                <Text style={{marginBottom: 10, fontSize: 20}}>{deck.questions[questionNumber].question}</Text>
+                <FlipButton style={styles.flipButton} onPress={this.flipCard}>
                     Answer
-                  </Text>
-                </TouchableOpacity>
+                </FlipButton>
+                <Text>cardView: {cardView}</Text>
                 <TextButton
                   style={{padding: 10}}
                   onPress={() => this.changeScore(1)}
@@ -88,17 +111,13 @@ class Quiz extends Component {
               </View>
            :
              <View style={styles.container}>
-               <Text style={{marginBottom: 10, fontSize: 20}}>{deck.questions[cardNumber].answer}</Text>
-               <TouchableOpacity
-                 onPress={this.flipCard}
-                 style={styles.viewButton}
-               >
-                 <Text style={{color: gray,
-                 fontSize: 18}}>
+               <Text style={{marginBottom: 10, fontSize: 20}}>{deck.questions[questionNumber].answer}</Text>
+               <FlipButton style={styles.flipButton} onPress={this.flipCard}>
                    Question
-                 </Text>
-               </TouchableOpacity>
+               </FlipButton>
+               <Text>cardView: {cardView}</Text>
              </View>
+
           }
         </View>
       )}
@@ -114,11 +133,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  viewButton: {
+  flipButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:50
+    marginBottom:10,
+    padding: 10
   },
+  progress: {
+    textAlign: 'center',
+    marginBottom:20,
+    marginTop: 20,
+  }
 })
 
 

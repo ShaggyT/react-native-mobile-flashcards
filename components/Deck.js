@@ -3,11 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+} from 'react-native'
 import { gray  } from '../utils/colors'
 import TextButton from './TextButton'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
+
 
 class Deck extends Component {
   //  adding static property to dynamically set navigation options
