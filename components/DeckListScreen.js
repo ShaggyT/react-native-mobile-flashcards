@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
 import { AppLoading } from 'expo'
 
-class DeckList extends Component {
+class DeckListScreen extends Component {
   // state = {
   //   ready: false,
   // }
@@ -27,7 +27,7 @@ class DeckList extends Component {
       <TouchableOpacity
         key={item.title}
         onPress={() => {
-          this.props.navigation.navigate('Deck', { title: item.title })
+          this.props.navigation.navigate('DeckScreen', { title: item.title })
         }}
       >
         <View>
@@ -126,4 +126,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
+export default connect(mapStateToProps, mapDispatchToProps)(DeckListScreen)

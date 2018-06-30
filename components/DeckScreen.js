@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
 
 
-class Deck extends Component {
+class DeckScreen extends Component {
   //  adding static property to dynamically set navigation options
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
@@ -32,10 +32,10 @@ class Deck extends Component {
               <Text style={styles.subHeader}>
                 {cardsCount(cardsCounts)}
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard', { title: deck.title })}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
                 Add Card
               </TextButton>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('Quiz', { title: deck.title })}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('QuizScreen', { title: deck.title })}>
                 Start Quiz
               </TextButton>
             </View>
@@ -44,7 +44,7 @@ class Deck extends Component {
               <Text style={styles.subHeader}>
                 {deck.title} deck is Empty!
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCard', { title: deck.title })}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
                 Add Card
               </TextButton>
             </View>
@@ -85,4 +85,4 @@ function mapStateToProps (state, { navigation }) {
 }
 
 
-export default connect(mapStateToProps)(Deck)
+export default connect(mapStateToProps)(DeckScreen)

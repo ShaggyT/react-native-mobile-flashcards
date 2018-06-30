@@ -25,7 +25,7 @@ function SubmitBtn ({onPress}) {
   )
 }
 
-class AddDeck extends Component {
+class AddDeckScreen extends Component {
   state = {
     title: '',
   }
@@ -61,7 +61,7 @@ class AddDeck extends Component {
 
   toHome = () => {
   // go from where we are back to where we previously were
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}))
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckScreen'}))
   }
 
   render() {
@@ -168,4 +168,4 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-export default connect(null, mapDispatchToProps)(AddDeck)
+export default connect(null, mapDispatchToProps)(AddDeckScreen)

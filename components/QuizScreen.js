@@ -9,14 +9,17 @@ import { ButtonGroup } from 'react-native-elements'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
 import { whiteBackground } from '../utils/colors'
-import { quizResult } from '../utils/helpers'
+import {
+  quizResult,
+  clearLocalNotification,
+  setLocalNotification,
+} from '../utils/helpers'
 import  ResetButton from './ResetButton'
 import FlipButton from './FlipButton'
 import * as Progress from 'react-native-progress'
 import { lightGreen, red, gray } from '../utils/colors'
 
-
-class Quiz extends Component {
+class QuizScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
     return {
@@ -41,7 +44,13 @@ class Quiz extends Component {
     })
   }
 
+
   changeScore = (currentScore) => {
+    //Clear Notifications if quiz complete
+     if (this.state.questionNumber === this.props.deck.questions.length) {
+       clearLocalNotifications()
+         .then(setLocalNotification())
+     }
     this.setState((state) => {
       return {
         ...state,
@@ -155,4 +164,4 @@ function mapStateToProps (state, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(Quiz)
+export default connect(mapStateToProps)(QuizScreen)

@@ -28,7 +28,7 @@ function SubmitBtn ({onPress}) {
   )
 }
 
-class AddCard extends Component {
+class AddCardScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Add Card'
@@ -182,4 +182,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddCard)
+export default connect(null, mapDispatchToProps)(AddCardScreen)
