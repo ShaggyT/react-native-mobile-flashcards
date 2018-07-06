@@ -35,7 +35,6 @@ class QuizScreen extends Component {
     score: 0,
     repeat: false,
     bounceValue: new Animated.Value(1),
-    useNativeDriver: true,
     image: '',
   }
 
@@ -59,11 +58,20 @@ class QuizScreen extends Component {
   }
 
   changeScore = (currentScore) => {
+    const { bounceValue } = this.state
     //Clear Notifications if quiz complete
      if (this.state.questionNumber === this.props.deck.questions.length) {
        clearLocalNotifications()
          .then(setLocalNotification())
      }
+
+     if (this.state.questionNumber === this.props.deck.questions.length) {
+       Animated.sequence([
+         Animated.timing(bounceValue, {duration: 1000, toValue: 1.04}),
+         Animated.spring(bounceValue, {toValue: 1, friction: 4})
+       ]).start()
+     }
+
     this.setState((state) => {
       const scorePercent = (((state.score + currentScore)/(state.questionNumber + 1))*100)
       return {
@@ -74,8 +82,9 @@ class QuizScreen extends Component {
         ? true
         : false,
         image: scorePercent <= 50
-        ? require('../assets/images/sad.jpg')
-        : require('../assets/images/happy.jpg'),
+        // ? require('../assets/images/sad.jpg')
+        ? require('../assets/images/repeat.gif')
+        : require('../assets/images/good.gif'),
         title: scorePercent <= 50
         ? "Keep Practicing"
         : "Good Job"
@@ -92,6 +101,7 @@ class QuizScreen extends Component {
       useNativeDriver: true,
       image: '',
     })
+    this.props.navigation.goBack();
   }
 
   returnToDeck = () => {
@@ -116,7 +126,7 @@ class QuizScreen extends Component {
               image={image}
               imageStyle={{height:300, width:344}}>
               <Animated.Text style={[{marginBottom: 10, textAlign: 'center', color:'#000'}, {transform: [{scale: bounceValue}]}]}>
-              {`You scored: ${quizResult(score, questionNumber)}`}
+                {`You scored: ${quizResult(score, questionNumber)}`}
               </Animated.Text>
               <Button
                 onPress={this.resetQuiz}
@@ -164,14 +174,13 @@ class QuizScreen extends Component {
                 </TextButton>
               </View>
            :
-             <View style={styles.container}>
-               <Text style={{marginBottom: 10, fontSize: 20}}>{deck.questions[questionNumber].answer}</Text>
+             <View style={styles.item}>
+               <Text style={{marginBottom: 10, fontSize: 20,  color: '#fff'}}> {deck.questions[questionNumber].answer}</Text>
                <FlipButton style={styles.flipButton} onPress={this.flipCard}>
                    Question
                </FlipButton>
-               <Text>cardView: {show}</Text>
+               <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text>
              </View>
-
           }
         </View>
         </View>

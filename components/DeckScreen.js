@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     // padding: 20,
   },
   header: {
+    marginTop: 50,
     fontSize: 30,
     textAlign: 'center',
     color: '#fff'
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   padding: 20,
   marginLeft: 10,
   marginRight: 10,
-  marginTop: 200,
+  marginTop: 170,
   justifyContent: 'center',
   shadowRadius: 3,
   shadowOpacity: 0.8,

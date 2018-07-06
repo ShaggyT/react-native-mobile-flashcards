@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: '#fff'
+    color: '#fff',
+    marginTop: 50,
   },
   item: {
   // flex: 1,
