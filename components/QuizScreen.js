@@ -82,7 +82,6 @@ class QuizScreen extends Component {
         ? true
         : false,
         image: scorePercent <= 50
-        // ? require('../assets/images/sad.jpg')
         ? require('../assets/images/repeat.gif')
         : require('../assets/images/good.gif'),
         title: scorePercent <= 50
