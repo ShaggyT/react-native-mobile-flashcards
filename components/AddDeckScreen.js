@@ -9,7 +9,7 @@ import {
   Platform,
   Alert
 } from 'react-native'
-import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
+import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, lightGray, placeholderGray } from '../utils/colors'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -67,20 +67,25 @@ class AddDeckScreen extends Component {
   render() {
     const { title } = this.state
     return (
-      <KeyboardAvoidingView behavior='padding' style={styles.container}>
-        <Text style={styles.text}>
-          What is the title of your new deck?
-        </Text>
-        <TextInput
-          value={title}
-          style={styles.title}
-          onChangeText={(title) => this.setState({title})}
-          placeholder="Deck Title"
-        />
-        <SubmitBtn
-          onPress={this.submit}
-        />
-      </KeyboardAvoidingView>
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior='padding'
+          style={styles.item}>
+          <Text style={styles.text}>
+            What is the title of your new deck?
+          </Text>
+          <TextInput
+            value={title}
+            style={styles.title}
+            onChangeText={(title) => this.setState({title})}
+            placeholder="Deck Title ..."
+            placeholderTextColor={placeholderGray}
+          />
+          <SubmitBtn
+            onPress={this.submit}
+          />
+        </KeyboardAvoidingView>
+      </View>
     )
   }
 }
@@ -88,22 +93,17 @@ class AddDeckScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: blackStatusBar,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: whiteBackground,
-    padding: 20,
+    backgroundColor: placeholderGray,
   },
-
   title: {
     width: 300,
     height: 44,
     padding: 8,
     borderWidth: 1,
-    borderColor: gray,
+    borderColor: lightGray,
     margin: 50,
     marginTop: 20,
-    color: blackStatusBar,
+    color: '#fff',
     borderRadius: Platform.OS === 'ios' ? 4 : 1,
     shadowRadius: 3,
     shadowOpacity: 0.8,
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     width: 200,
+    marginBottom: 30
   },
   AndroidSubmitBtn: {
     backgroundColor: lightGreen,
@@ -142,10 +143,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 30
   },
   submitBtnText: {
     color: whiteHeader,
-    fontSize: 22,
+    fontSize: 18,
     textAlign: 'center',
   },
   center: {
@@ -157,15 +159,34 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#fff'
+  },
+  item: {
+  // flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: blackStatusBar,
+  padding: 20,
+  borderRadius: Platform.OS === 'ios' ? 16 : 2,
+  padding: 20,
+  marginLeft: 10,
+  marginRight: 10,
+  marginTop: 200,
+  justifyContent: 'center',
+  shadowRadius: 3,
+  shadowOpacity: 0.8,
+  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowOffset: {
+    width: 0,
+    height: 3
+    },
   },
 })
-
 
 function mapDispatchToProps (dispatch) {
   return {
     addDeck: (deck) => dispatch(addDeck(deck)),
   }
 }
-
 
 export default connect(null, mapDispatchToProps)(AddDeckScreen)

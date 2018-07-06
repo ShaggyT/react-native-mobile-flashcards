@@ -17,9 +17,8 @@ import AddCardScreen from './AddCardScreen'
 import QuizScreen from './QuizScreen'
 
 
-
 const Tabs = createBottomTabNavigator({
-  DeckListScrren: {
+  DeckListScreen: {
     screen: DeckListScreen,
     navigationOptions: {
       tabBarLabel: 'Decks',

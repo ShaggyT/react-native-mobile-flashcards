@@ -5,9 +5,10 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Platform,
 } from 'react-native'
 import { Header, Card } from 'react-native-elements'
-import { blackStatusBar, lightGreen, gray, black } from '../utils/colors'
+import { blackStatusBar, lightGreen, gray, black, placeholderGray } from '../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
@@ -15,11 +16,12 @@ import { cardsCount } from '../utils/helpers'
 import { AppLoading } from 'expo'
 
 class DeckListScreen extends Component {
-  // state = {
-  //   ready: false,
-  // }
+  state = {
+    ready: false,
+  }
   componentDidMount() {
     this.props.receiveDecks()
+    this.setState(() => ({ready: true}))
   }
 
   renderItem = ({ item }) => {
@@ -31,15 +33,20 @@ class DeckListScreen extends Component {
         }}
       >
         <View>
-          <Card style={{fontSize: 20 }} title={item.title}>
+          <Card
+
+            title={item.title}>
             {item.cardsCounts > 0 ?
               <View style={styles.deckItem}>
                 <Text style={{color: gray}}>{cardsCount(item.cardsCounts)}</Text>
                 <MaterialCommunityIcons
-                  style={{justifyContent: 'center', alignItems: 'center'}}
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center'}}
                   name='cards'
                   size={20}
-                  style={{marginRight: 10, marginBottom:-20}}
+                  style={{
+                    marginRight: 10, marginBottom:-20}}
                   color={lightGreen }
                 />
               </View>
@@ -55,13 +62,13 @@ class DeckListScreen extends Component {
   }
 
   render() {
-    // const { ready } = this.state
-    //
-    // if(ready === false) {
-    //   return <AppLoading />
-    // }
+    const { ready } = this.state
+
+    if(ready === false) {
+      return <AppLoading />
+    }
     return (
-      <View>
+      <View style={styles.container}>
         <Header
            centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
            backgroundColor={ blackStatusBar }
@@ -71,15 +78,14 @@ class DeckListScreen extends Component {
             data={this.props.decks}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => item.title}
-          >
-          </FlatList>
+          />
           :
           <View>
             <Text style={styles.text}>
               No decks found
             </Text>
           </View>
-          }
+        }
       </View>
     );
   }
@@ -88,9 +94,7 @@ class DeckListScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
+    backgroundColor: placeholderGray,
   },
   deckItem: {
     justifyContent: 'center',
@@ -108,8 +112,28 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: gray,
   },
+  item: {
+  // flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: blackStatusBar,
+  padding: 20,
+  borderRadius: Platform.OS === 'ios' ? 16 : 2,
+  padding: 20,
+  marginLeft: 10,
+  marginRight: 10,
+  marginTop: 10,
+  marginBottom: 10,
+  justifyContent: 'center',
+  shadowRadius: 3,
+  shadowOpacity: 0.8,
+  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowOffset: {
+    width: 0,
+    height: 3
+  },
+},
 })
-
 
 function mapStateToProps(decks) {
   return {

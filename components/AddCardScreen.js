@@ -11,12 +11,11 @@ import {
   Platform,
   Alert
 } from 'react-native';
-import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray } from '../utils/colors'
+import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, gray, placeholderGray } from '../utils/colors'
 import { addCard  } from '../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { addCardToDeck } from '../utils/api'
-
 
 function SubmitBtn ({onPress}) {
   return(
@@ -72,7 +71,10 @@ class AddCardScreen extends Component {
   render() {
     const { question, answer } = this.state
     return (
-        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior='padding'
+          style={styles.item}>
           <Text style={styles.text}>
             Write your Question ...
           </Text>
@@ -81,6 +83,7 @@ class AddCardScreen extends Component {
             style={styles.input}
             onChangeText={(question) => this.setState({question})}
             placeholder="Question..."
+            placeholderTextColor={placeholderGray}
           />
           <Text style={styles.text}>
             Write your Answer...
@@ -90,12 +93,13 @@ class AddCardScreen extends Component {
             style={styles.input}
             onChangeText={(answer) => this.setState({answer})}
             placeholder="Answer..."
+            placeholderTextColor={placeholderGray}
           />
           <SubmitBtn
             onPress={this.submit}
           />
         </KeyboardAvoidingView>
-
+      </View>
     );
   }
 }
@@ -103,11 +107,12 @@ class AddCardScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: blackStatusBar,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: whiteBackground,
-    padding: 20,
+    //
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    backgroundColor: placeholderGray,
+    // padding: 20
+
   },
 
   input: {
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: gray,
     margin: 50,
     marginTop: 20,
-    color: blackStatusBar,
+    color: '#fff',
     borderRadius: Platform.OS === 'ios' ? 4 : 1,
     shadowRadius: 3,
     shadowOpacity: 0.8,
@@ -146,6 +151,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     width: 200,
+    marginBottom: 30,
   },
   AndroidSubmitBtn: {
     backgroundColor: lightGreen,
@@ -157,10 +163,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 30,
   },
   submitBtnText: {
     color: whiteHeader,
-    fontSize: 22,
+    fontSize: 18,
     textAlign: 'center',
   },
   center: {
@@ -172,6 +179,26 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#fff'
+  },
+  item: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: blackStatusBar,
+  padding: 20,
+  borderRadius: Platform.OS === 'ios' ? 16 : 2,
+  padding: 20,
+  marginLeft: 10,
+  marginRight: 10,
+  justifyContent: 'center',
+  marginTop: 150,
+  shadowRadius: 3,
+  shadowOpacity: 0.8,
+  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowOffset: {
+    width: 0,
+    height: 3
+    },
   },
 })
 

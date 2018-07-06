@@ -1,6 +1,3 @@
-import { AsyncStorage } from 'react-native'
-import { DECKS_STORAGE_KEY } from './api'
-
 export const initialDeckState = {
   React: {
     title: 'React',

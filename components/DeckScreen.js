@@ -3,11 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
+  Platform
 } from 'react-native'
-import { gray  } from '../utils/colors'
+import { gray, placeholderGray, blackStatusBar  } from '../utils/colors'
 import TextButton from './TextButton'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards'
 
 
 class DeckScreen extends Component {
@@ -23,7 +25,7 @@ class DeckScreen extends Component {
     const cardsCounts = deck.questions.length
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.item}>
           <Text style={styles.header}>
             {deck.title}
           </Text>
@@ -32,7 +34,7 @@ class DeckScreen extends Component {
               <Text style={styles.subHeader}>
                 {cardsCount(cardsCounts)}
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
+              <TextButton style={{padding: 10 }} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
                 Add Card
               </TextButton>
               <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('QuizScreen', { title: deck.title })}>
@@ -58,13 +60,15 @@ class DeckScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
+    backgroundColor: placeholderGray,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // padding: 20,
   },
   header: {
     fontSize: 30,
     textAlign: 'center',
+    color: '#fff'
   },
   subHeader: {
     fontSize: 20,
@@ -72,6 +76,26 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: gray,
     marginBottom: 50,
+  },
+  item: {
+  // flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: blackStatusBar,
+  padding: 20,
+  borderRadius: Platform.OS === 'ios' ? 16 : 2,
+  padding: 20,
+  marginLeft: 10,
+  marginRight: 10,
+  marginTop: 200,
+  justifyContent: 'center',
+  shadowRadius: 3,
+  shadowOpacity: 0.8,
+  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowOffset: {
+    width: 0,
+    height: 3
+    },
   },
 })
 

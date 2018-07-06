@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native'
-import { Notifications} from 'expo'
+import { Notifications, Permissions } from 'expo'
 
 const NOTIFICATION_KEY = 'MobileFlashcards::notifications'
 
@@ -12,15 +12,21 @@ export function quizResult (score, questionNumber) {
   return `${((score*100)/questionNumber).toFixed(0)} %`
 }
 
+export function progressFunc (questionNumber, cardCount) {
+  return ((questionNumber) + 1)/ cardCount
+}
+
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
+// Notifications
+
 function createNotification () {
   return {
-    title: 'Log your stats!',
-    body: "👋 don't forget to log your stats for today!",
+    title: 'Practice the flash cards!',
+    body: "💥 don't forget to practice the flash cards today!",
     ios: {
       sound: true,
     },
