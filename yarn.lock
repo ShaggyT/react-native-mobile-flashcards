@@ -5423,7 +5423,7 @@ prop-types@15.5.8:
   dependencies:
     fbjs "^0.8.9"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -5587,6 +5587,19 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-awesome-alert@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alert/-/react-native-awesome-alert-0.4.0.tgz#b6aed8d5bb20d757235f981f0d599b3c596e8db7"
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-check-box "^2.0.2"
+
+react-native-awesome-alerts@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.0.8.tgz#e549e0bdd6125483a7c27cae383047ecf4e9a4eb"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
@@ -5602,6 +5615,12 @@ react-native-cardview@^1.1.5:
   resolved "https://registry.yarnpkg.com/react-native-cardview/-/react-native-cardview-1.1.5.tgz#c068fa7bf57c3dcd35af4327cc5173cea51baa62"
   dependencies:
     prop-types "^15.6.0"
+
+react-native-check-box@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-check-box/-/react-native-check-box-2.1.0.tgz#a4e5fa2c1860cfc3f5758ae3493b6ec2ec7c2878"
+  dependencies:
+    prop-types "^15.5.7"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -5636,22 +5655,12 @@ react-native-gesture-handler@1.0.0-alpha.41:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-linear-gradient@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-maps@0.21.0:
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.21.0.tgz#005f58e93d7623ad59667e8002101970ddf235c2"
   dependencies:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
-
-react-native-progress-circle@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress-circle/-/react-native-progress-circle-2.0.0.tgz#26c883cda380690a50baa446ee39a48d31cfabce"
 
 react-native-progress@^3.5.0:
   version "3.5.0"

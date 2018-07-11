@@ -5,7 +5,7 @@ import {
   Platform,
 } from 'react-native'
 import { blackStatusBar, whiteHeader, lightGreen } from '../utils/colors'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import {
   createBottomTabNavigator,
   createStackNavigator
@@ -16,20 +16,19 @@ import DeckScreen from './DeckScreen'
 import AddCardScreen from './AddCardScreen'
 import QuizScreen from './QuizScreen'
 
-
 const Tabs = createBottomTabNavigator({
   DeckListScreen: {
     screen: DeckListScreen,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-list-box' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='md-list-box' size={28} color={tintColor} />
     },
   },
   AddDeckScreen: {
     screen: AddDeckScreen,
     navigationOptions: {
       tabBarLabel: 'Add Deck',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='add-box' size={28} color={tintColor} />
     },
   },
   }, {

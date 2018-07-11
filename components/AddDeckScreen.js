@@ -5,34 +5,24 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  TouchableOpacity,
   Platform,
-  Alert
 } from 'react-native'
-import { blackStatusBar, lightGreen, whiteHeader, whiteBackground, lightGray, placeholderGray } from '../utils/colors'
+import { blackStatusBar, lightGray, placeholderGray } from '../utils/colors'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { saveDeckTitle } from '../utils/api'
-
-function SubmitBtn ({onPress}) {
-  return(
-    <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
-      onPress={onPress}>
-      <Text style={styles.submitBtnText}>Submit</Text>
-    </TouchableOpacity>
-  )
-}
+import TextButton from './TextButton'
+import AlertButton from './AlertButton'
+import { Header } from 'react-native-elements'
 
 class AddDeckScreen extends Component {
   state = {
     title: '',
   }
 
-
-  submit = () => {
-    const  { title }  = this.state
+  createDeck = () => {
+    const  { title, showAlert }  = this.state
 
     // update redux: saving specific deck into redux store
     this.props.addDeck({
@@ -42,14 +32,9 @@ class AddDeckScreen extends Component {
       }
     })
 
-    // if (title.length === 0 ) {
-    //   Alert.alert('The title field can be empty!')
-    //   return
-    // }
-
     //  clearing the state
     this.setState({
-      title: ''
+      title: '',
     })
 
     // Navigate to home
@@ -68,11 +53,15 @@ class AddDeckScreen extends Component {
     const { title } = this.state
     return (
       <View style={styles.container}>
+        <Header
+           centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
+           backgroundColor={ blackStatusBar }
+         />
         <KeyboardAvoidingView
           behavior='padding'
           style={styles.item}>
           <Text style={styles.text}>
-            What is the title of your new deck?
+            Title of your Deck
           </Text>
           <TextInput
             value={title}
@@ -81,9 +70,15 @@ class AddDeckScreen extends Component {
             placeholder="Deck Title ..."
             placeholderTextColor={placeholderGray}
           />
-          <SubmitBtn
-            onPress={this.submit}
-          />
+          {title.length !== 0 ?
+            <TextButton
+              style={{padding: 10 }}
+              onPress={this.createDeck}>
+              Create Deck
+            </TextButton>
+          :
+          <AlertButton />
+          }
         </KeyboardAvoidingView>
       </View>
     )
@@ -100,7 +95,7 @@ const styles = StyleSheet.create({
     height: 44,
     padding: 8,
     borderWidth: 1,
-    borderColor: lightGray,
+    borderColor: placeholderGray,
     margin: 50,
     marginTop: 20,
     color: '#fff',
@@ -113,57 +108,12 @@ const styles = StyleSheet.create({
       height: 3
     },
   },
-  img: {
-    width: 100,
-    height: 100,
-    margin: 50,
-  },
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-    alignItems: 'center',
-  },
-  iosSubmitBtn: {
-    backgroundColor: lightGreen,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-    width: 200,
-    marginBottom: 30
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: lightGreen,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 30
-  },
-  submitBtnText: {
-    color: whiteHeader,
-    fontSize: 18,
-    textAlign: 'center',
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-  },
   text: {
     fontSize: 16,
     color: '#fff',
     marginTop: 50,
   },
   item: {
-  // flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: blackStatusBar,
@@ -172,7 +122,7 @@ const styles = StyleSheet.create({
   padding: 20,
   marginLeft: 10,
   marginRight: 10,
-  marginTop: 200,
+  marginTop: 160,
   justifyContent: 'center',
   shadowRadius: 3,
   shadowOpacity: 0.8,

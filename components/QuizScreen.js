@@ -3,23 +3,21 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Animated,
   Platform,
 } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
-import { whiteBackground, lightGreen, red, gray, blackStatusBar, placeholderGray  } from '../utils/colors'
+import { lightGreen, red, blackStatusBar, placeholderGray } from '../utils/colors'
 import {
   quizResult,
   clearLocalNotification,
   setLocalNotification,
-  progressFunc
+  progressFunc,
 } from '../utils/helpers'
 import FlipButton from './FlipButton'
 import * as Progress from 'react-native-progress'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Card, Button, Icon } from 'react-native-elements'
 
 class QuizScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,12 +30,11 @@ class QuizScreen extends Component {
   state = {
     show: 'question',
     questionNumber: 0,
-    score: 0,
+    quizScore: 0,
     repeat: false,
     bounceValue: new Animated.Value(1),
     image: '',
   }
-
 
   componentDidMount() {
     const { bounceValue } = this.state
@@ -52,10 +49,11 @@ class QuizScreen extends Component {
     this.setState((state) => {
       return {
         ...state,
-        show: 'question' ? 'answer' : 'question',
+        show: show === 'question' ? 'answer' : 'question',
       }
     })
   }
+
 
   changeScore = (currentScore) => {
     const { bounceValue } = this.state
@@ -73,11 +71,11 @@ class QuizScreen extends Component {
      }
 
     this.setState((state) => {
-      const scorePercent = (((state.score + currentScore)/(state.questionNumber + 1))*100)
+      const scorePercent = (((state.quizScore + currentScore)/(state.questionNumber + 1))*100)
       return {
         ...state,
         questionNumber: state.questionNumber + 1,
-        score: state.score + currentScore,
+        quizScore: state.quizScore + currentScore,
         repeat: scorePercent <= 50
         ? true
         : false,
@@ -95,10 +93,10 @@ class QuizScreen extends Component {
     this.setState({
       show: 'question',
       questionNumber: 0,
-      score: 0,
+      quizScore: 0,
       repeat: false,
-      useNativeDriver: true,
       image: '',
+      bounceValue: new Animated.Value(1),
     })
     this.props.navigation.goBack();
   }
@@ -109,7 +107,7 @@ class QuizScreen extends Component {
 
   render() {
     const { deck } = this.props
-    const { show, questionNumber, score, bounceValue, repeat, image, title } = this.state
+    const { show, questionNumber, quizScore, bounceValue, repeat, image, title } = this.state
     const cardCount = deck.questions.length
 
     return (
@@ -120,12 +118,11 @@ class QuizScreen extends Component {
           <Animated.View
             style={[styles.MainContainer, {transform: [{scale: bounceValue}]} ]}>
             <Card
-              style={styles.card}
               title={title}
               image={image}
-              imageStyle={{height:300, width:344}}>
+              imageStyle={{height:400, width:343}}>
               <Animated.Text style={[{marginBottom: 10, textAlign: 'center', color:'#000'}, {transform: [{scale: bounceValue}]}]}>
-                {`You scored: ${quizResult(score, questionNumber)}`}
+                {`You scored: ${quizResult(quizScore, questionNumber)}`}
               </Animated.Text>
               <Button
                 onPress={this.resetQuiz}
@@ -158,7 +155,7 @@ class QuizScreen extends Component {
                 <FlipButton style={styles.flipButton} onPress={this.flipCard}>
                     Answer
                 </FlipButton>
-                <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text>
+                {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
                 <TextButton
                   style={{padding: 10}}
                   onPress={() => this.changeScore(1)}
@@ -173,12 +170,12 @@ class QuizScreen extends Component {
                 </TextButton>
               </View>
            :
-             <View style={styles.item}>
+             <View style={[styles.item,{marginTop: 0}]}>
                <Text style={{marginBottom: 10, fontSize: 20,  color: '#fff'}}> {deck.questions[questionNumber].answer}</Text>
                <FlipButton style={styles.flipButton} onPress={this.flipCard}>
                    Question
                </FlipButton>
-               <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text>
+               {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
              </View>
           }
         </View>
@@ -209,16 +206,15 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   progressBar: {
-    marginBottom: 80,
+    marginBottom: 20,
   },
   MainContainer:{
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
     paddingTop: ( Platform.OS === 'ios' ) ? 10 : 0,
     backgroundColor: placeholderGray,
   },
   item: {
+
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: blackStatusBar,
@@ -228,7 +224,6 @@ const styles = StyleSheet.create({
   marginLeft: 10,
   marginRight: 10,
   justifyContent: 'center',
-  // marginTop: 150,
   shadowRadius: 3,
   shadowOpacity: 0.8,
   shadowColor: 'rgba(0, 0, 0, 0.24)',

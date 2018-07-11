@@ -9,7 +9,6 @@ import { gray, placeholderGray, blackStatusBar  } from '../utils/colors'
 import TextButton from './TextButton'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
-import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards'
 
 
 class DeckScreen extends Component {
@@ -61,25 +60,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: placeholderGray,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // padding: 20,
   },
   header: {
-    marginTop: 50,
-    fontSize: 30,
+    marginTop: 40,
+    fontSize: 25,
     textAlign: 'center',
     color: '#fff'
   },
   subHeader: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     marginTop: 5,
     color: gray,
-    marginBottom: 50,
+    marginBottom: 40,
   },
   item: {
-  // flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: blackStatusBar,
@@ -88,11 +83,11 @@ const styles = StyleSheet.create({
   padding: 20,
   marginLeft: 10,
   marginRight: 10,
-  marginTop: 170,
+  marginTop: 150,
   justifyContent: 'center',
   shadowRadius: 3,
   shadowOpacity: 0.8,
-  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowColor: 'rgba(0, 0, 0, 0.3)',
   shadowOffset: {
     width: 0,
     height: 3

@@ -15,6 +15,11 @@ export const getDecks  = () =>
 
 // getDeck: take in a single id argument and return the deck associated with that id.
 
+export function getDeck (id) {
+  return getDecks().then((decks) => {
+    return decks[id]
+  })
+}
 
 // saveDeckTitle: take in a single title argument and add it to the decks.
 
@@ -29,15 +34,11 @@ export function saveDeckTitle (title) {
 
 // addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
 
-export function addCardToDeck (title, card) {
-  AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
-    const decks = JSON.parse(result)
-    decks[title].questions.push(card)
-    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-      [title]: {
-        title: title,
-        questions: decks[title].questions
-      }
-    }))
+export function addCardToDeck(title, card) {
+  getDecks().then((decks) => {
+    if (decks[title] && decks[title].questions) {
+      decks[title].questions.push(card)
+    }
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
   })
 }

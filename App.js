@@ -1,29 +1,20 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   View,
-  StatusBar,
 } from 'react-native'
 import { blackStatusBar } from './utils/colors'
-import { Constants } from 'expo'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { setLocalNotification } from './utils/helpers'
 import Navigation from './components/Navigation'
+import AppStatusBar from './components/AppStatusBar'
 
-//  custome statusbar
-function AppStatusBar({backgroundColor, ...props}) {
-    return(
-      <View style={{backgroundColor, height: Constants.statusBarHeight}}>
-        <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-      </View>
-    )
-}
-
-export default class App extends React.Component {
+export default class App extends Component {
   componentDidMount() {
     setLocalNotification()
   }
+
   render() {
     const store = createStore(reducer)
     return (

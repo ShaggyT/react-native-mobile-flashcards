@@ -5,15 +5,15 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Platform,
 } from 'react-native'
 import { Header, Card } from 'react-native-elements'
-import { blackStatusBar, lightGreen, gray, black, placeholderGray } from '../utils/colors'
+import { blackStatusBar, lightGreen, gray, placeholderGray } from '../utils/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
 import { AppLoading } from 'expo'
+import { getDecks } from '../utils/api'
 
 class DeckListScreen extends Component {
   state = {
@@ -21,10 +21,10 @@ class DeckListScreen extends Component {
   }
   componentDidMount() {
     this.props.receiveDecks()
-    this.setState(() => ({ready: true}))
+    getDecks().then((decks) => receiveDecks(decks)).then(() => this.setState(() => ({ready: true})))
   }
 
-  renderItem = ({ item }) => {
+  renderDeck = ({ item }) => {
     return (
       <TouchableOpacity
         key={item.title}
@@ -34,7 +34,6 @@ class DeckListScreen extends Component {
       >
         <View>
           <Card
-
             title={item.title}>
             {item.cardsCounts > 0 ?
               <View style={styles.deckItem}>
@@ -64,8 +63,8 @@ class DeckListScreen extends Component {
   render() {
     const { ready } = this.state
 
-    if(ready === false) {
-      return <AppLoading />
+    if (!ready) {
+      return (<AppLoading/>)
     }
     return (
       <View style={styles.container}>
@@ -75,8 +74,10 @@ class DeckListScreen extends Component {
          />
         {this.props.decks && Object.keys(this.props.decks).length ?
           <FlatList
+            style={{flex:1}}
             data={this.props.decks}
-            renderItem={this.renderItem}
+            extraData={this.state}
+            renderItem={this.renderDeck}
             keyExtractor={(item, index) => item.title}
           />
           :
@@ -112,27 +113,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: gray,
   },
-  item: {
-  // flex: 1,
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: blackStatusBar,
-  padding: 20,
-  borderRadius: Platform.OS === 'ios' ? 16 : 2,
-  padding: 20,
-  marginLeft: 10,
-  marginRight: 10,
-  marginTop: 10,
-  marginBottom: 10,
-  justifyContent: 'center',
-  shadowRadius: 3,
-  shadowOpacity: 0.8,
-  shadowColor: 'rgba(0, 0, 0, 0.24)',
-  shadowOffset: {
-    width: 0,
-    height: 3
-  },
-},
 })
 
 function mapStateToProps(decks) {
