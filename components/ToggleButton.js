@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { lightGreen } from '../utils/colors'
 
-export default function FlipButton ({onPress, children, style={}}) {
+export default function ToggleButton ({onPress, children, style={}}) {
   return(
     <TouchableOpacity onPress={onPress}>
       <Text style={[styles.flip, style]}>{children}</Text>

@@ -41,7 +41,7 @@ const Tabs = createBottomTabNavigator({
     style: {
       height: 56,
       backgroundColor: Platform.OS === 'ios' ? blackStatusBar : whiteHeader,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      shadowColor: 'rgba(0, 0, 0, 0.34)',
       shadowOffset: {
         width: 0,
         height: 3

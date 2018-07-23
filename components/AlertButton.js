@@ -40,10 +40,10 @@ export default class AlertButton extends Component {
           message="Input field can't be blank!"
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
-          showCancelButton={true}
+          showCancelButton={false}
           showConfirmButton={true}
-          cancelText="No, cancel"
-          confirmText="Yes, delete it"
+          cancelText="Cancel"
+          confirmText="Cancel"
           confirmButtonColor={red}
           onCancelPressed={() => {
             this.hideAlert();

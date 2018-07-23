@@ -15,7 +15,7 @@ import {
   setLocalNotification,
   progressFunc,
 } from '../utils/helpers'
-import FlipButton from './FlipButton'
+import ToggleButton from './ToggleButton'
 import * as Progress from 'react-native-progress'
 import { Card, Button, Icon } from 'react-native-elements'
 
@@ -44,7 +44,7 @@ class QuizScreen extends Component {
     ]).start()
   }
 
-  flipCard = () => {
+  toggleCard = () => {
     const { show } = this.state
     this.setState((state) => {
       return {
@@ -152,9 +152,9 @@ class QuizScreen extends Component {
           { ( show === 'question') ?
               <View style={styles.item}>
                 <Text style={{marginBottom: 10, fontSize: 20, color: '#fff'}}>{deck.questions[questionNumber].question}</Text>
-                <FlipButton style={styles.flipButton} onPress={this.flipCard}>
+                <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                     Answer
-                </FlipButton>
+                </ToggleButton>
                 {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
                 <TextButton
                   style={{padding: 10}}
@@ -172,9 +172,9 @@ class QuizScreen extends Component {
            :
              <View style={[styles.item,{marginTop: 0}]}>
                <Text style={{marginBottom: 10, fontSize: 20,  color: '#fff'}}> {deck.questions[questionNumber].answer}</Text>
-               <FlipButton style={styles.flipButton} onPress={this.flipCard}>
+               <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                    Question
-               </FlipButton>
+               </ToggleButton>
                {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
              </View>
           }
@@ -190,10 +190,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: placeholderGray,
-    // alignItems: 'center',
     justifyContent: 'center',
   },
-  flipButton: {
+  ToggleButton: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:10,

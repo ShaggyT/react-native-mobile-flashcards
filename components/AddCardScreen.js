@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  Platform, 
+  Platform,
 } from 'react-native'
 import { blackStatusBar, gray, placeholderGray } from '../utils/colors'
 import { addCard  } from '../actions'
@@ -22,16 +22,16 @@ class AddCardScreen extends Component {
     }
   }
   state = {
-    question: '',
-    answer: ''
+    questionInput: '',
+    answerInput: ''
   }
 
   createCard = () => {
-    const  { question , answer }  = this.state
+    const  { questionInput , answerInput }  = this.state
     const { title } = this.props.navigation.state.params
     const card = {
-      question: question,
-      answer: answer
+      questionInput: questionInput,
+      answerInput: answerInput
     }
 
     // update redux: saving specific card into redux store
@@ -39,8 +39,8 @@ class AddCardScreen extends Component {
 
     // clear the state
     this.setState({
-      question: '',
-      answer: ''
+      questionInput: '',
+      answerInput: ''
     })
 
     // Navigate to Deck
@@ -51,7 +51,7 @@ class AddCardScreen extends Component {
   }
 
   render() {
-    const { question, answer } = this.state
+    const { questionInput, answerInput } = this.state
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView
@@ -61,9 +61,9 @@ class AddCardScreen extends Component {
             Write your Question
           </Text>
           <TextInput
-            value={question}
+            value={questionInput}
             style={styles.textInputField}
-            onChangeText={(question) => this.setState({question})}
+            onChangeText={(questionInput) => this.setState({questionInput})}
             placeholder="Question..."
             placeholderTextColor={placeholderGray}
           />
@@ -71,16 +71,16 @@ class AddCardScreen extends Component {
             Write your Answer
           </Text>
           <TextInput
-            value={answer}
+            value={answerInput}
             style={styles.textInputField}
-            onChangeText={(answer) => this.setState({answer})}
+            onChangeText={(answerInput) => this.setState({answerInput})}
             placeholder="Answer..."
             placeholderTextColor={placeholderGray}
           />
-          {question.length !== 0 && answer.length !== 0
+          {questionInput.length !== 0 && answerInput.length !== 0
             ?
             <TextButton
-              style={{padding: 10 }}
+              style={{padding: 15 }}
               onPress={this.createCard}>
               Create Card
             </TextButton>
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: placeholderGray,
   },
-
   textInputField: {
     width: 300,
     height: 44,
