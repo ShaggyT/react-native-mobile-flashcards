@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { setLocalNotification } from './utils/helpers'
 import Navigation from './components/Navigation'
-import AppStatusBar from './components/AppStatusBar'
+import FlashcardStatusBar from './components/FlashcardStatusBar'
 
 export default class App extends Component {
   componentDidMount() {
@@ -20,7 +20,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={{flex:1}}>
-          <AppStatusBar
+          <FlashcardStatusBar
             backgroundColor={ blackStatusBar }
             barStyle="light-content"
           />

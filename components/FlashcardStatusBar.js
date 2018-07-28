@@ -6,7 +6,7 @@ import {
 import { Constants } from 'expo'
 
 //  custom status bar
-export default function AppStatusBar({backgroundColor, ...props}) {
+export default function FlashcardStatusBar({backgroundColor, ...props}) {
     return(
       <View style={{backgroundColor, height: Constants.statusBarHeight}}>
         <StatusBar translucent backgroundColor={backgroundColor} {...props} />

@@ -14,8 +14,13 @@ import { NavigationActions } from 'react-navigation'
 import { addCardToDeck } from '../utils/api'
 import TextButton from './TextButton'
 import AlertButton from './AlertButton'
+import PropTypes from 'prop-types'
 
 class AddCardScreen extends Component {
+  static propTypes = {
+     navigation: PropTypes.object.isRequired
+   }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Add Card'
@@ -29,14 +34,11 @@ class AddCardScreen extends Component {
   createCard = () => {
     const  { questionInput , answerInput }  = this.state
     const { title } = this.props.navigation.state.params
-    const card = {
-      questionInput: questionInput,
-      answerInput: answerInput
-    }
 
     // update redux: saving specific card into redux store
-    this.props.addCard(title, card)
-
+    if (questionInput !== '' && answerInput !== '') {
+      this.props.addCard(title, { questionInput , answerInput })
+    }
     // clear the state
     this.setState({
       questionInput: '',
@@ -47,7 +49,9 @@ class AddCardScreen extends Component {
     this.props.navigation.goBack()
 
     // save to DB
-    addCardToDeck (title,card)
+    if (questionInput !== '' && answerInput !== '') {
+      addCardToDeck (title,{ questionInput , answerInput })
+    }
   }
 
   render() {
@@ -57,7 +61,7 @@ class AddCardScreen extends Component {
         <KeyboardAvoidingView
           behavior='padding'
           style={styles.item}>
-          <Text style={styles.text}>
+          <Text style={styles.inputLabel}>
             Write your Question
           </Text>
           <TextInput
@@ -67,7 +71,7 @@ class AddCardScreen extends Component {
             placeholder="Question..."
             placeholderTextColor={placeholderGray}
           />
-          <Text style={styles.text}>
+          <Text style={styles.inputLabel}>
             Write your Answer
           </Text>
           <TextInput
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
       height: 3
     },
   },
-  text: {
+  inputLabel: {
     fontSize: 16,
     color: '#fff'
   },
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps (dispatch) {
   return {
-    addCard: (title, card) => dispatch(addCard(title, card)),
+    addCard: (title, { questionInput , answerInput }) => dispatch(addCard(title, { questionInput , answerInput })),
   }
 }
 

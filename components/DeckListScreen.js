@@ -14,30 +14,40 @@ import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
 import { AppLoading } from 'expo'
 import { getDecks } from '../utils/api'
+import PropTypes from 'prop-types'
+
 
 class DeckListScreen extends Component {
+  static propTypes = {
+     navigation: PropTypes.object.isRequired,
+     decks: PropTypes.array.isRequired,
+   }
+
   state = {
     ready: false,
   }
+
   componentDidMount() {
     this.props.receiveDecks()
     getDecks().then((decks) => receiveDecks(decks)).then(() => this.setState(() => ({ready: true})))
   }
 
   renderDeck = ({ item }) => {
+    const deck = item
+    const { title, cardsCounts } = deck
     return (
       <TouchableOpacity
-        key={item.title}
+        key={title}
         onPress={() => {
-          this.props.navigation.navigate('DeckScreen', { title: item.title })
+          this.props.navigation.navigate('DeckScreen', { title: title })
         }}
       >
         <View>
           <Card
-            title={item.title}>
-            {item.cardsCounts > 0 ?
+            title={title}>
+            {cardsCounts > 0 ?
               <View style={styles.deckItem}>
-                <Text style={{color: gray}}>{cardsCount(item.cardsCounts)}</Text>
+                <Text style={{color: gray}}>{cardsCount(cardsCounts)}</Text>
                 <MaterialCommunityIcons
                   style={{
                     justifyContent: 'center',
@@ -62,23 +72,25 @@ class DeckListScreen extends Component {
 
   render() {
     const { ready } = this.state
+    const { decks } = this.props
 
     if (!ready) {
       return (<AppLoading/>)
     }
+
     return (
       <View style={styles.container}>
         <Header
            centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
            backgroundColor={ blackStatusBar }
          />
-        {this.props.decks && Object.keys(this.props.decks).length ?
+
+        {decks && Object.keys(decks).length > 0 ?
           <FlatList
             style={{flex:1}}
-            data={this.props.decks}
-            extraData={this.state}
+            data={decks}
             renderItem={this.renderDeck}
-            keyExtractor={(item, index) => item.title}
+            keyExtractor={(deck, index) => deck.title}
           />
           :
           <View>
@@ -115,14 +127,16 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps(decks) {
-  return {
-    decks: Object.keys(decks).map(deck => ({
-      title: decks[deck].title,
-      cardsCounts: decks[deck].questions.length
-    }))
-  }
-}
+const mapStateToProps = (state) => ({
+    decks: Object.keys(state).reduce((decks, deck) => {
+        decks.push({
+            title: state[deck].title,
+            cardsCounts: state[deck].questions.length,
+            deck
+        });
+        return decks
+    }, []).sort().reverse()
+});
 
 function mapDispatchToProps (dispatch) {
   return {

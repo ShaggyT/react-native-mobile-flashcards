@@ -9,13 +9,13 @@ import { lightGreen } from '../utils/colors'
 export default function ToggleButton ({onPress, children, style={}}) {
   return(
     <TouchableOpacity onPress={onPress}>
-      <Text style={[styles.flip, style]}>{children}</Text>
+      <Text style={[styles.toggleBtn, style]}>{children}</Text>
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  flip: {
+  toggleBtn: {
     textAlign: 'center',
     color: lightGreen,
     fontSize: 20,

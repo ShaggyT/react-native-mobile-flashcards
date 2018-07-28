@@ -4,28 +4,27 @@ import AwesomeAlert from 'react-native-awesome-alerts'
 import TextButton from './TextButton'
 import { red } from '../utils/colors'
 
-export default class AlertButton extends Component {
+class AlertButton extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { showAlert: false };
+    this.state = { showAlert: false }
   };
 
   showAlert = () => {
     this.setState({
       showAlert: true
-    });
-  };
+    })
+  }
 
   hideAlert = () => {
     this.setState({
       showAlert: false
-    });
-  };
+    })
+  }
 
   render() {
-    const {showAlert} = this.state;
-
+    const { showAlert } = this.state
     return (
       <View>
         <TextButton
@@ -53,20 +52,8 @@ export default class AlertButton extends Component {
           }}
         />
       </View>
-    );
-  };
-};
-
-const styles = StyleSheet.create({
-  button: {
-    margin: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 5,
-    backgroundColor: "#AEDEF4",
-  },
-  text: {
-    color: '#fff',
-    fontSize: 15
+    )
   }
-});
+}
+
+export default AlertButton

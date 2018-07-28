@@ -34,6 +34,19 @@ export function saveDeckTitle (title) {
 
 // addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
 
+// const card = {
+//   question: question ,
+//   answer: answer,
+// }
+
+// decks: {
+//   deckTitle : {
+//     title: deckTitle,
+//     questions: [card]
+//   }
+// }
+
+
 export function addCardToDeck(title, card) {
   getDecks().then((decks) => {
     if (decks[title] && decks[title].questions) {

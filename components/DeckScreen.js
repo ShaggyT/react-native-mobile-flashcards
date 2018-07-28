@@ -9,9 +9,16 @@ import { gray, placeholderGray, blackStatusBar  } from '../utils/colors'
 import TextButton from './TextButton'
 import { connect } from 'react-redux'
 import { cardsCount } from '../utils/helpers'
+import PropTypes from 'prop-types'
 
 
 class DeckScreen extends Component {
+
+  static propTypes = {
+    deck: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
+  }
+
   //  adding static property to dynamically set navigation options
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
@@ -20,7 +27,7 @@ class DeckScreen extends Component {
     }
   }
   render() {
-    const { deck } = this.props
+    const { deck, title } = this.props
     const cardsCounts = deck.questions.length
     return (
       <View style={styles.container}>
@@ -28,24 +35,24 @@ class DeckScreen extends Component {
           <Text style={styles.header}>
             {deck.title}
           </Text>
-          {deck.questions.length > 0 ?
+          {cardsCounts > 0 ?
             <View>
               <Text style={styles.subHeader}>
                 {cardsCount(cardsCounts)}
               </Text>
-              <TextButton style={{padding: 10 }} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
+              <TextButton style={{padding: 10 }} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: title })}>
                 Add Card
               </TextButton>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('QuizScreen', { title: deck.title })}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('QuizScreen', { title: title })}>
                 Start Quiz
               </TextButton>
             </View>
             :
             <View>
               <Text style={styles.subHeader}>
-                {deck.title} deck is Empty!
+                {title} deck is Empty!
               </Text>
-              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: deck.title })}>
+              <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: title })}>
                 Add Card
               </TextButton>
             </View>
@@ -95,11 +102,11 @@ const styles = StyleSheet.create({
   },
 })
 
-
 function mapStateToProps (state, { navigation }) {
  // comes form DeckList - when we navigate to Deck, passing title
   const { title } = navigation.state.params
   return {
+    title: title,
     deck: state[title]
   }
 }

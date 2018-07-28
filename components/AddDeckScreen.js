@@ -15,8 +15,13 @@ import { saveDeckTitle } from '../utils/api'
 import TextButton from './TextButton'
 import AlertButton from './AlertButton'
 import { Header } from 'react-native-elements'
+import PropTypes from 'prop-types'
 
 class AddDeckScreen extends Component {
+  static propTypes = {
+     navigation: PropTypes.object.isRequired
+   }
+
   state = {
     title: '',
   }
@@ -25,13 +30,14 @@ class AddDeckScreen extends Component {
     const  { title, showAlert }  = this.state
 
     // update redux: saving specific deck into redux store
-    this.props.addDeck({
-      [title]: {
-        title: title,
-        questions: []
-      }
-    })
-
+    if (title !== '') {
+      this.props.addDeck({
+        [title]: {
+          title: title,
+          questions: []
+        }
+      })
+    }
     //  clearing the state
     this.setState({
       title: '',
@@ -41,7 +47,14 @@ class AddDeckScreen extends Component {
     this.toHome()
 
     // save to DB
-    saveDeckTitle (title)
+    if (title !== '') {
+      saveDeckTitle ({
+        [title]: {
+          title: title,
+          questions: []
+        }
+      })
+    }
   }
 
   toHome = () => {
@@ -49,18 +62,21 @@ class AddDeckScreen extends Component {
     this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckScreen'}))
   }
 
+
   render() {
     const { title } = this.state
     return (
       <View style={styles.container}>
         <Header
-           centerComponent={{ text: 'Mobile Flashcard', style: { color: '#fff' } }}
+           centerComponent={{
+             text: 'Mobile Flashcard',
+             style: { color: '#fff' } }}
            backgroundColor={ blackStatusBar }
          />
         <KeyboardAvoidingView
           behavior='padding'
           style={styles.item}>
-          <Text style={styles.text}>
+          <Text style={styles.inputLabel}>
             Title of your Deck
           </Text>
           <TextInput
@@ -108,7 +124,7 @@ const styles = StyleSheet.create({
       height: 3
     },
   },
-  text: {
+  inputLabel: {
     fontSize: 16,
     color: '#fff',
     marginTop: 50,

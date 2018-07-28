@@ -18,8 +18,14 @@ import {
 import ToggleButton from './ToggleButton'
 import * as Progress from 'react-native-progress'
 import { Card, Button, Icon } from 'react-native-elements'
+import PropTypes from 'prop-types'
 
 class QuizScreen extends Component {
+  static propTypes = {
+    deck: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired
+  }
+
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
     return {
@@ -37,10 +43,10 @@ class QuizScreen extends Component {
   }
 
   componentDidMount() {
-    const { bounceValue } = this.state
+    const { bounceValue, opacity } = this.state
     Animated.sequence([
       Animated.timing(bounceValue, {duration: 1000, toValue: 1.04}),
-      Animated.spring(bounceValue, {toValue: 1, friction: 4})
+      Animated.spring(bounceValue, {toValue: 1, friction: 4}),
     ]).start()
   }
 
@@ -56,14 +62,15 @@ class QuizScreen extends Component {
 
 
   changeScore = (currentScore) => {
+    const { deck } = this.props
     const { bounceValue } = this.state
     //Clear Notifications if quiz complete
-     if (this.state.questionNumber === this.props.deck.questions.length) {
+     if (this.state.questionNumber === deck.questions.length) {
        clearLocalNotifications()
          .then(setLocalNotification())
      }
 
-     if (this.state.questionNumber === this.props.deck.questions.length) {
+     if (this.state.questionNumber === deck.questions.length) {
        Animated.sequence([
          Animated.timing(bounceValue, {duration: 1000, toValue: 1.04}),
          Animated.spring(bounceValue, {toValue: 1, friction: 4})
@@ -213,7 +220,6 @@ const styles = StyleSheet.create({
     backgroundColor: placeholderGray,
   },
   item: {
-
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: blackStatusBar,
@@ -237,7 +243,7 @@ function mapStateToProps (state, { navigation }) {
  // comes form Deck - when we navigate to Quiz, passing title
   const { title } = navigation.state.params
   return {
-    deck: state[title]
+    deck: state[title] || {}
   }
 }
 
