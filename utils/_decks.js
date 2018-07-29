@@ -3,12 +3,12 @@ export const initialDeckState = {
     title: 'React',
     questions: [
       {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
+        questionInput: 'What is React?',
+        answerInput: 'A library for managing user interfaces'
       },
       {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
+        questionInput: 'Where do you make Ajax requests in React?',
+        answerInput: 'The componentDidMount lifecycle event'
       }
     ]
   },
@@ -16,8 +16,8 @@ export const initialDeckState = {
     title: 'JavaScript',
     questions: [
       {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
+        questionInput: 'What is a closure?',
+        answerInput: 'The combination of a function and the lexical environment within which that function was declared.'
       }
     ]
   }

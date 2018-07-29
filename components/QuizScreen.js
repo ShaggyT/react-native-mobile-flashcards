@@ -158,7 +158,7 @@ class QuizScreen extends Component {
           </View>
           { ( show === 'question') ?
               <View style={styles.item}>
-                <Text style={{marginBottom: 10, fontSize: 20, color: '#fff'}}>{deck.questions[questionNumber].question}</Text>
+                <Text style={{marginBottom: 10, fontSize: 20, color: '#fff'}}>{deck.questions[questionNumber].questionInput}</Text>
                 <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                     Answer
                 </ToggleButton>
@@ -178,7 +178,7 @@ class QuizScreen extends Component {
               </View>
            :
              <View style={[styles.item,{marginTop: 0}]}>
-               <Text style={{marginBottom: 10, fontSize: 20,  color: '#fff'}}> {deck.questions[questionNumber].answer}</Text>
+               <Text style={{marginBottom: 10, fontSize: 20,  color: '#fff'}}> {deck.questions[questionNumber].answerInput}</Text>
                <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                    Question
                </ToggleButton>
