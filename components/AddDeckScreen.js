@@ -43,8 +43,12 @@ class AddDeckScreen extends Component {
       title: '',
     })
 
-    // Navigate to home
-    this.toHome()
+    // Navigate to DeckScreen
+    this.props.navigation.navigate(
+      'DeckScreen',
+      { title: title }
+    )
+
 
     // save to DB
     if (title !== '') {
@@ -56,12 +60,6 @@ class AddDeckScreen extends Component {
       })
     }
   }
-
-  toHome = () => {
-  // go from where we are back to where we previously were
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckScreen'}))
-  }
-
 
   render() {
     const { title } = this.state

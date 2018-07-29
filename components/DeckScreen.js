@@ -40,7 +40,7 @@ class DeckScreen extends Component {
               <Text style={styles.subHeader}>
                 {cardsCount(cardsCounts)}
               </Text>
-              <TextButton style={{padding: 10 }} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: title })}>
+              <TextButton style={{ padding: 10 }} onPress={() => this.props.navigation.navigate('AddCardScreen', { title: title })}>
                 Add Card
               </TextButton>
               <TextButton style={{padding: 10}} onPress={() => this.props.navigation.navigate('QuizScreen', { title: title })}>
