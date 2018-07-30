@@ -2,6 +2,7 @@
 
 This is the final assessment project for Udacity's Nanodegree React Native course.
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app)  and was tested for iOS only.
+The app has been tested on both iOS and Android.
 
 ## Project Overview
 
@@ -28,7 +29,7 @@ To run the project, you need Expo app on mobile device, and/or Xcode for the iOS
     yarn start  
   ```
 
-- Getting started via npms
+- Getting started via npm
 ```
   npm install
   npm start

@@ -105,7 +105,6 @@ class QuizScreen extends Component {
       image: '',
       bounceValue: new Animated.Value(1),
     })
-    this.props.navigation.goBack();
   }
 
   returnToDeck = () => {
@@ -127,7 +126,7 @@ class QuizScreen extends Component {
             <Card
               title={title}
               image={image}
-              imageStyle={{height:400, width:343}}>
+              imageStyle={Platform.OS === 'ios' ? styles.iosImage : styles.AndroidImage}>
               <Animated.Text style={[{marginBottom: 10, textAlign: 'center', color:'#000'}, {transform: [{scale: bounceValue}]}]}>
                 {`You scored: ${quizResult(quizScore, questionNumber)}`}
               </Animated.Text>
@@ -162,7 +161,6 @@ class QuizScreen extends Component {
                 <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                     Answer
                 </ToggleButton>
-                {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
                 <TextButton
                   style={{padding: 10}}
                   onPress={() => this.changeScore(1)}
@@ -182,7 +180,6 @@ class QuizScreen extends Component {
                <ToggleButton style={styles.ToggleButton} onPress={this.toggleCard}>
                    Question
                </ToggleButton>
-               {/* <Text style={{color:'#fff', marginBottom: 10}}>cardView: {show}</Text> */}
              </View>
           }
         </View>
@@ -236,6 +233,14 @@ const styles = StyleSheet.create({
     width: 0,
     height: 3
     },
+  },
+  iosImage: {
+    height:400,
+    width:343
+  },
+  AndroidImage: {
+    height:280,
+    width:343
   },
 })
 
