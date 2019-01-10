@@ -16,7 +16,7 @@ To run the project, you need Expo app on mobile device, and/or Xcode for the iOS
 
 - Download or clone the repository
 ```
-  git clone
+  git@github.com:ShaggyT/mobile-flashcards.git
 ```
 - Navigate to the project folder
 ```

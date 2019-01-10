@@ -15,6 +15,7 @@ import DeckListScreen from './DeckListScreen'
 import DeckScreen from './DeckScreen'
 import AddCardScreen from './AddCardScreen'
 import QuizScreen from './QuizScreen'
+import SplashScreen from './SplashScreen'
 
 const Tabs = createBottomTabNavigator({
   DeckListScreen: {
@@ -54,6 +55,14 @@ const Tabs = createBottomTabNavigator({
 
 const MainNavigator = createStackNavigator(
   {
+  SplashScreen: {
+    screen: SplashScreen,
+    headerMode: 'none',
+    header: null,
+    navigationOptions: {
+        header: null,
+    }
+  },
   HomeScreen: {
     screen: Tabs,
     headerMode: 'none',
