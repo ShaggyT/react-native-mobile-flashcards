@@ -4,6 +4,12 @@ This is the final assessment project for Udacity's Nanodegree React Native cours
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app)  and was tested for iOS only.
 The app has been tested on both iOS and Android.
 
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Requirements](#requirements)
+- [Installation](#installation) 
+
 ## Project Overview
 
 Mobile Flashcards allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
